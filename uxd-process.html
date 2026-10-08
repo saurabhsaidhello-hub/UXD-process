@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The UXD Process — Engagement & Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#000000;--line:#2A2A2A;--text:#F2F0EB;--muted:#8a8a8a;--dim:#4a4a4a;--accent:#E8E4D9;--green:#4ADE80;--amber:#E0983F;--btn:#0C0C0C;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-weight:300;min-height:100%;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px 100px}
+@media(min-width:600px){.wrap{padding:0 40px 100px}}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:.5px solid var(--line);margin-bottom:44px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.mono,.nav-name,.nav-link,.hero-label,.sec-tag,.stat-lbl,.work-num,.work-meta,.cap,.tag{font-family:'DM Mono',ui-monospace,monospace;text-transform:uppercase}
+.nav-name{font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.nav-links{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+@media(min-width:600px){.nav-links{gap:26px}}
+.nav-link{font-size:11px;letter-spacing:.06em;color:var(--muted);cursor:pointer;background:none;border:none;padding:6px 0}
+.nav-link:hover,.nav-link.active{color:var(--text)}
+button:focus-visible,.work-item:focus-visible{outline:1px solid var(--green);outline-offset:3px}
+.hero-label{font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:16px}
+.hero-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(40px,11vw,84px);line-height:1.03;margin-bottom:24px;font-weight:400}
+.hero-name em{font-style:italic;color:var(--muted)}
+.hero-bio{font-size:15px;line-height:1.85;color:var(--muted);max-width:620px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:.5px solid var(--line);margin:32px 0 8px}
+.stat{padding:16px 10px;border-right:.5px solid var(--line)}
+.stat:last-child{border:none}
+.stat-num{font-family:'DM Serif Display',serif;font-size:32px;line-height:1}
+.stat-lbl{font-size:8.5px;letter-spacing:.07em;color:var(--muted);margin-top:8px}
+.section{display:none}.section.active{display:block}
+.sec-head{display:flex;align-items:center;gap:12px;margin:44px 0 22px}
+.section>.sec-head:first-child{margin-top:0}
+.sec-tag{font-size:9px;letter-spacing:.1em;color:var(--muted);border:.5px solid var(--line);padding:5px 12px;border-radius:40px;white-space:nowrap}
+.sec-line{flex:1;height:.5px;background:var(--line)}
+p.t{font-size:14.5px;line-height:1.9;color:var(--muted);margin-bottom:18px}
+p.t strong{color:var(--accent);font-weight:400}
+.pull{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,4.5vw,30px);line-height:1.3;margin:8px 0 26px}
+.pull em{color:var(--muted)}
+.fig{border:.5px solid var(--line);padding:16px;margin:26px 0}
+.fig svg{display:block;width:100%;height:auto}
+.cap{font-size:9px;letter-spacing:.06em;color:var(--muted);margin-top:12px}
+svg text{font-family:'DM Mono',monospace;font-size:12px;fill:var(--text)}
+svg .mut{fill:var(--muted);font-size:10px}
+svg .box{fill:none;stroke:var(--dim);stroke-width:1}
+svg .on{fill:none;stroke:var(--green);stroke-width:1.2}
+.work-item{display:flex;align-items:flex-start;padding:18px 0;border-bottom:.5px solid var(--line);cursor:pointer;gap:14px;flex-wrap:wrap}
+.work-item:first-of-type{border-top:.5px solid var(--line)}
+.work-num{font-size:10px;color:var(--muted);min-width:24px;padding-top:4px}
+.work-main{flex:1;min-width:0}
+.work-title{font-size:16px;color:var(--text);font-weight:400}
+.work-meta{font-size:9px;letter-spacing:.05em;color:var(--muted);margin-top:5px}
+.work-body{flex-basis:100%;font-size:14px;line-height:1.8;color:var(--muted);display:none;padding-top:12px;border-top:.5px solid var(--line)}
+.work-body b{color:var(--accent);font-weight:400}
+.work-item.open .work-body{display:block}
+.work-arrow{font-family:'DM Mono',monospace;font-size:20px;color:var(--dim);transition:transform .25s}
+.work-item.open .work-arrow{transform:rotate(45deg);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{all:unset;box-sizing:border-box;padding:8px 16px;border:.5px solid var(--line);border-radius:40px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.chip:hover{color:var(--text);border-color:var(--text)}
+.chip.sel{background:var(--green);color:var(--btn);border-color:var(--green)}
+.panel{border:.5px solid var(--line);padding:18px;font-size:13.5px;line-height:1.8;color:var(--muted)}
+.panel h4{font-family:'DM Serif Display',serif;font-weight:400;font-size:22px;color:var(--text);margin-bottom:8px}
+.panel ul{list-style:none;margin:10px 0}
+.panel li{padding:6px 0;border-bottom:.5px solid var(--line)}
+.panel li:last-child{border:none}
+.panel li b{color:var(--accent);font-weight:400}
+.verdict{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--green);border-top:.5px solid var(--line);padding-top:12px;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tile{all:unset;box-sizing:border-box;padding:16px 12px;border:.5px solid var(--line);cursor:pointer;color:var(--muted);text-align:center}
+.tile:hover,.tile.sel{border-color:var(--green);color:var(--text)}
+.tile .big{display:block;font-family:'DM Serif Display',serif;font-size:30px;color:var(--text)}
+.tile span.l{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+.range{width:100%;accent-color:var(--green);margin:12px 0}
+.row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0}
+.bar{height:6px;background:var(--line);margin:4px 0 12px}
+.bar i{display:block;height:100%;background:var(--green);transition:width .2s}
+.footer{margin-top:72px;padding-top:24px;border-top:.5px solid var(--line)}
+.footer div{font-family:'DM Serif Display',serif;font-size:22px;font-style:italic;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div class="nav-name">UXD / Engagement</div>
+<div class="nav-links">
+<button class="nav-link active" onclick="show('s1',this)">Overview</button>
+<button class="nav-link" onclick="show('s2',this)">Process</button>
+<button class="nav-link" onclick="show('s3',this)">Goals</button>
+<button class="nav-link" onclick="show('s4',this)">Metrics</button>
+</div></nav>
+
+<div id="s1" class="section active">
+<div class="hero">
+<div class="hero-label">( UX Design Process )</div>
+<h1 class="hero-name">Design that people <em>come back to.</em></h1>
+<p class="hero-bio">Engagement isn't a feature you add. It's the <strong>result of solving a real problem well</strong>, repeatedly. A structured UXD process turns guesses into evidence, so every screen earns its place.</p>
+<div class="stats">
+<div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Phases</div></div>
+<div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Test users find ~85% of issues</div></div>
+<div class="stat"><div class="stat-num">∞</div><div class="stat-lbl">Iterations</div></div>
+</div></div>
+<div class="sec-head"><span class="sec-tag">( The Loop )</span><div class="sec-line"></div></div>
+<p class="pull">Understand, make, measure — <em>then do it again.</em></p>
+<div class="fig">
+<svg viewBox="0 0 700 190" role="img" aria-label="Six-phase UX design loop">
+<g class="mid" text-anchor="middle">
+<rect class="on" x="10" y="30" width="100" height="60"/><text x="60" y="64">Discover</text>
+<rect class="box" x="125" y="30" width="100" height="60"/><text x="175" y="64">Define</text>
+<rect class="box" x="240" y="30" width="100" height="60"/><text x="290" y="64">Ideate</text>
+<rect class="box" x="355" y="30" width="100" height="60"/><text x="405" y="64">Prototype</text>
+<rect class="box" x="470" y="30" width="100" height="60"/><text x="520" y="64">Test</text>
+<rect class="on" x="585" y="30" width="100" height="60"/><text x="635" y="64">Iterate</text>
+</g>
+<path class="box" d="M635 90 V140 H60 V96" stroke-dasharray="4 4"/>
+<text class="mut" x="350" y="162" text-anchor="middle">learn from real behaviour, feed it back into discovery</text>
+</svg>
+<div class="cap">Fig. 1 — Linear on paper, circular in practice</div></div>
+<p class="t">Open the <strong>Process</strong> tab for each phase, pick a business goal in <strong>Goals</strong>, and see how to measure results in <strong>Metrics</strong>.</p>
+</div>
+
+<div id="s2" class="section">
+<div class="sec-head"><span class="sec-tag">( Six Phases )</span><div class="sec-line"></div></div>
+<div id="phases"></div>
+</div>
+
+<div id="s3" class="section">
+<div class="sec-head"><span class="sec-tag">( Pick a Goal )</span><div class="sec-line"></div></div>
+<p class="t">What's the engagement problem? Choose one to see where to focus.</p>
+<div class="chips" id="goalchips"></div>
+<div class="panel" id="goalpanel"></div>
+</div>
+
+<div id="s4" class="section">
+<div class="sec-head"><span class="sec-tag">( HEART Framework )</span><div class="sec-line"></div></div>
+<p class="t">Google's HEART framework gives engagement five measurable angles. Tap one.</p>
+<div class="grid" id="heart"></div>
+<div class="panel" id="heartpanel" style="margin-top:12px">Select a dimension above.</div>
+<div class="sec-head"><span class="sec-tag">( Onboarding Funnel )</span><div class="sec-line"></div></div>
+<p class="t">Every extra step costs users. Drag to see an illustrative drop-off if each step loses 15% of people.</p>
+<div class="panel">
+<div class="row"><span>Steps before first value</span><span id="stepn" class="mono">4</span></div>
+<input class="range" type="range" min="1" max="8" value="4" id="steps" aria-label="Onboarding steps">
+<div class="bar"><i id="bar" style="width:52%"></i></div>
+<div class="row"><span>Users reaching value</span><span id="pct" class="mono">52%</span></div>
+<div class="verdict">Illustrative model, not a benchmark. Cut steps, defer account creation, show value first.</div>
+</div>
+</div>
+
+<div class="footer"><div>Now go design something worth returning to.</div></div>
+</div>
+<script>
+var phases=[
+['Discover','Research · Empathy','Learn who the users are and what they struggle with. <b>Methods:</b> interviews, contextual inquiry, surveys, analytics review, competitor audit. <b>Output:</b> raw insights and observed behaviours.'],
+['Define','Synthesis · Framing','Turn research into a clear problem. <b>Methods:</b> personas, journey maps, affinity clustering, "How might we" statements. <b>Output:</b> a problem statement and prioritised opportunities.'],
+['Ideate','Divergence · Selection','Generate many options before choosing. <b>Methods:</b> sketching, Crazy 8s, user flows, dot voting. <b>Output:</b> a short list of concepts scored on impact versus effort.'],
+['Prototype','Low to high fidelity','Make ideas tangible cheaply. <b>Methods:</b> paper sketches, wireframes, clickable prototypes, design system components. <b>Output:</b> something users can react to.'],
+['Test','Validation','Watch real people attempt real tasks. <b>Methods:</b> moderated usability tests, A/B tests, first-click tests, accessibility checks. <b>Output:</b> ranked issues by severity.'],
+['Launch & Iterate','Measure · Improve','Ship, then keep learning. <b>Methods:</b> HEART metrics, session replays, feedback loops, release experiments. <b>Output:</b> next cycle\'s research questions.']
+];
+var ph=document.getElementById('phases');
+phases.forEach(function(p,i){
+var d=document.createElement('div');d.className='work-item';d.tabIndex=0;d.setAttribute('role','button');
+d.innerHTML='<div class="work-num">0'+(i+1)+'</div><div class="work-main"><div class="work-title">'+p[0]+'</div><div class="work-meta">'+p[1]+'</div></div><div class="work-arrow">+</div><div class="work-body">'+p[2]+'</div>';
+d.onclick=function(){d.classList.toggle('open')};
+d.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();d.classList.toggle('open')}};
+ph.appendChild(d)});
+
+var goals={
+'Low sign-ups':['Acquisition','Landing pages and sign-up friction are the likely culprits.',[['Focus phase','Discover + Test'],['Method','First-click tests, message testing'],['Metric','Sign-up conversion rate']],'Clarify the value proposition and trim form fields.'],
+'Users drop off early':['Activation','People arrive but never reach the "aha" moment.',[['Focus phase','Define + Prototype'],['Method','Journey mapping, onboarding usability tests'],['Metric','Time to first value, completion rate']],'Guide to one quick win before asking for effort.'],
+'Users don\'t return':['Retention','The product solved the problem once, but gives no reason to come back.',[['Focus phase','Discover + Iterate'],['Method','Diary studies, cohort analysis, churn interviews'],['Metric','Day-7 / Day-30 retention']],'Find the recurring need and design around it, not around notifications.'],
+'Tasks feel hard':['Task success','Navigation, labels or flows are getting in the way.',[['Focus phase','Test'],['Method','Think-aloud sessions, tree tests, heuristic review'],['Metric','Task success rate, error rate, time on task']],'Fix the top three severity issues first.']
+};
+var gc=document.getElementById('goalchips'),gp=document.getElementById('goalpanel');
+Object.keys(goals).forEach(function(k,i){
+var b=document.createElement('button');b.className='chip';b.textContent=k;
+b.onclick=function(){gc.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});b.classList.add('sel');
+var g=goals[k];gp.innerHTML='<h4>'+g[0]+'</h4>'+g[1]+'<ul>'+g[2].map(function(r){return '<li><b>'+r[0]+':</b> '+r[1]+'</li>'}).join('')+'</ul><div class="verdict">TRY → '+g[3]+'</div>'};
+gc.appendChild(b);if(i===0)b.click()});
+
+var heart=[
+['H','Happiness','Satisfaction, perceived ease and delight. Measure with CSAT, NPS, SUS surveys.'],
+['E','Engagement','Depth of involvement. Measure sessions per week, feature use, actions per visit.'],
+['A','Adoption','New users or new feature uptake. Measure sign-ups, first-time feature use.'],
+['R','Retention','Users who return over time. Measure cohort retention and churn.'],
+['T','Task success','Efficiency and effectiveness. Measure completion rate, errors, time on task.']
+];
+var hg=document.getElementById('heart'),hp=document.getElementById('heartpanel');
+heart.forEach(function(h){
+var t=document.createElement('button');t.className='tile';t.innerHTML='<span class="big">'+h[0]+'</span><span class="l">'+h[1]+'</span>';
+t.onclick=function(){hg.querySelectorAll('.tile').forEach(function(x){x.classList.remove('sel')});t.classList.add('sel');hp.innerHTML='<h4>'+h[1]+'</h4>'+h[2]};
+hg.appendChild(t)});
+
+document.getElementById('steps').oninput=function(){
+var n=+this.value,p=Math.round(Math.pow(.85,n)*100);
+document.getElementById('stepn').textContent=n;
+document.getElementById('pct').textContent=p+'%';
+document.getElementById('bar').style.width=p+'%'};
+
+function show(id,b){
+document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+document.querySelectorAll('.nav-link').forEach(function(x){x.classList.remove('active')});
+document.getElementById(id).classList.add('active');b.classList.add('active');window.scrollTo(0,0)}
+</script>
+</body>
+</html>
